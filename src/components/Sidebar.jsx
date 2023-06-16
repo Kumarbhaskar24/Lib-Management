@@ -6,7 +6,6 @@ import { Button, Divider, Typography } from "@mui/material";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const Sidebar = () => {
@@ -36,7 +35,7 @@ const Sidebar = () => {
         <Box>
           <Stack direction="row" gap="10px">
             <LocalLibraryIcon fontSize="large" />
-            <Typography variant="h4">LMS</Typography>
+            <Typography variant="h4">Library</Typography>
           </Stack>
           <Divider sx={{ mb: "10px", mt: "10px" }} />
         </Box>

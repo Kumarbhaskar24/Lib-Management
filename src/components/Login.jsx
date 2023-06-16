@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Avatar, Button, Container, TextField, Typography,Box} from "@mui/material";
+import { Avatar, Button, Container, TextField, Typography,Box, ButtonGroup} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
 import EastIcon from "@mui/icons-material/East";
 import { Alert, AlertTitle } from "@mui/material";
 import { blue, green } from "@mui/material/colors";
 import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import {auth,Provider} from '../firebase';
 import {signInWithPopup} from 'firebase/auth';
-
+import {FacebookAuthProvider} from "firebase/auth";
 export default function Login() {
 
   const [value,setValue]=useState('');  
@@ -24,6 +25,15 @@ export default function Login() {
 
   const onGoogleSignIn=()=>{
     signInWithPopup(auth,Provider).then((data)=>{
+        setValue(data.user.email)
+        localStorage.setItem("email",data.user.email)        
+    })
+  }
+
+
+  const onFacebookSignIn=()=>{
+    const Pro=new FacebookAuthProvider();
+    signInWithPopup(auth,Pro).then((data)=>{
         setValue(data.user.email)
         localStorage.setItem("email",data.user.email)        
     })
@@ -104,7 +114,7 @@ export default function Login() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2,backgroundColor: 'green' }}
           >
             Login
           </Button>
@@ -137,18 +147,25 @@ export default function Login() {
   </Typography>
 </Alert>
     <Box sx={{ mt: 1 ,mb:1}}>
-    <Button
-            style={{
-                backgroundColor:green
-            }}
-            fullWidth
+    <ButtonGroup fullWidth
             variant="contained"
+            aria-label="outlined button group"
+            orientation="vertical"
+            >
+    <Button
+            sx={{ mt: 2, mb: 1,backgroundColor: 'red' }}
             startIcon={<GoogleIcon/>}
-            sx={{ mt: 3, mb: 2 }}
             onClick={onGoogleSignIn}
           >           
              Continue with Google
           </Button>
+          <Button
+            startIcon={<FacebookIcon/>}
+            onClick={onFacebookSignIn}
+          >           
+             Continue with Facebook
+          </Button>
+          </ButtonGroup>
     </Box>
       </Container>
     </Container>
