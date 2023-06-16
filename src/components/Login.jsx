@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Avatar, Button, Container, TextField, Typography,Box, ButtonGroup} from "@mui/material";
+import { Avatar, Button, Container, TextField, Typography, Box, ButtonGroup } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
 import EastIcon from "@mui/icons-material/East";
@@ -9,12 +9,24 @@ import { Alert, AlertTitle } from "@mui/material";
 import { blue, green } from "@mui/material/colors";
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import {auth,Provider} from '../firebase';
-import {signInWithPopup} from 'firebase/auth';
-import {FacebookAuthProvider} from "firebase/auth";
+import { auth, Provider } from '../firebase';
+import { signInWithPopup } from 'firebase/auth';
+import { FacebookAuthProvider } from "firebase/auth";
+
+let imageStyle = {
+  height: "100vh",
+  width: "100vw",
+  backgroundImage:
+    'url("https://c4.wallpaperflare.com/wallpaper/526/8/1002/library-interior-interior-design-books-wallpaper-preview.jpg")',
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+  color: "white",
+};
+
+
 export default function Login() {
 
-  const [value,setValue]=useState('');  
+  const [value, setValue] = useState('');
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,27 +35,26 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const onGoogleSignIn=()=>{
-    signInWithPopup(auth,Provider).then((data)=>{
-        setValue(data.user.email)
-        localStorage.setItem("email",data.user.email)        
+  const onGoogleSignIn = () => {
+    signInWithPopup(auth, Provider).then((data) => {
+      setValue(data.user.email)
+      localStorage.setItem("email", data.user.email)
     })
   }
 
 
-  const onFacebookSignIn=()=>{
-    const Pro=new FacebookAuthProvider();
-    signInWithPopup(auth,Pro).then((data)=>{
-        setValue(data.user.email)
-        localStorage.setItem("email",data.user.email)        
+  const onFacebookSignIn = () => {
+    const Pro = new FacebookAuthProvider();
+    signInWithPopup(auth, Pro).then((data) => {
+      setValue(data.user.email)
+      localStorage.setItem("email", data.user.email)
     })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setValue(localStorage.getItem('email'))
-    if(value)
-    {
-        navigate("/");
+    if (value) {
+      navigate("/");
     }
   })
 
@@ -63,13 +74,13 @@ export default function Login() {
       setError(true);
     }
     setLoading(false);
-};
+  };
   if (currentUser) return <Navigate to="/" />;
 
   return (
-    
+    <div  style={imageStyle}>
     <Container component="main" maxWidth="sm">
-      <Typography variant="h4" mt={4} textAlign="center">
+      <Typography variant="h4" textAlign="center" style={{ color: "skyblue" }}>
         Library Management System
       </Typography>
       <Container
@@ -79,6 +90,10 @@ export default function Login() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          borderStyle:"groove",
+          borderColor:"gray",
+          backgroundColor: "transparent",
+          backdropFilter: "blur(5px)"
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -89,6 +104,9 @@ export default function Login() {
         </Typography>
         <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
           <TextField
+            sx={{
+              backgroundColor: "whitesmoke"
+            }}
             margin="normal"
             required
             fullWidth
@@ -99,6 +117,9 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
+            sx={{
+              backgroundColor: "whitesmoke"
+            }}
             margin="normal"
             required
             fullWidth
@@ -114,7 +135,7 @@ export default function Login() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2,backgroundColor: 'green' }}
+            sx={{ mt: 3, mb: 2, backgroundColor: 'green' }}
           >
             Login
           </Button>
@@ -125,49 +146,50 @@ export default function Login() {
           )}
         </Box>
         <Alert severity="info">
-    <AlertTitle>Use login info</AlertTitle>
-  Email Address: <strong>admin@library.com</strong>
-  <br />
-  <br />
-  Password: <strong>admin123</strong>
-  <br />
-  <br />
-  <Typography
-    variant="outlined"
-    component={Link}
-    to="/home"
-    sx={{
-      textDecoration: "none",
-      display: "inline-flex",
-      alignItems: "center",
-    }}
-  >
-    Go to Home{" "}
-    <EastIcon sx={{ verticalAlign: "middle", marginLeft: "5px" }} />
-  </Typography>
-</Alert>
-    <Box sx={{ mt: 1 ,mb:1}}>
-    <ButtonGroup fullWidth
+          <AlertTitle>Use login info</AlertTitle>
+          Email Address: <strong>admin@library.com</strong>
+          <br />
+          <br />
+          Password: <strong>admin123</strong>
+          <br />
+          <br />
+          <Typography
+            variant="outlined"
+            component={Link}
+            to="/home"
+            sx={{
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+            }}
+          >
+            Go to Home{" "}
+            <EastIcon sx={{ verticalAlign: "middle", marginLeft: "5px" }} />
+          </Typography>
+        </Alert>
+        <Box sx={{ mt: 1, mb: 1 }}>
+          <ButtonGroup fullWidth
             variant="contained"
             aria-label="outlined button group"
             orientation="vertical"
+          >
+            <Button
+              sx={{ mt: 2, mb: 1, backgroundColor: 'red' }}
+              startIcon={<GoogleIcon />}
+              onClick={onGoogleSignIn}
             >
-    <Button
-            sx={{ mt: 2, mb: 1,backgroundColor: 'red' }}
-            startIcon={<GoogleIcon/>}
-            onClick={onGoogleSignIn}
-          >           
-             Continue with Google
-          </Button>
-          <Button
-            startIcon={<FacebookIcon/>}
-            onClick={onFacebookSignIn}
-          >           
-             Continue with Facebook
-          </Button>
+              Continue with Google
+            </Button>
+            <Button
+              startIcon={<FacebookIcon />}
+              onClick={onFacebookSignIn}
+            >
+              Continue with Facebook
+            </Button>
           </ButtonGroup>
-    </Box>
+        </Box>
       </Container>
     </Container>
+    </div>
   );
 }

@@ -26,16 +26,17 @@ const Sidebar = () => {
       justifyContent={"space-between"}
       sx={{
         height: "100vh",
-        position: "sticky",
-        top: "0",
+        width: "15vw",
+        position:"sticky",
         borderRight: "1px solid lightgray",
+
       }}
     >
       <Stack spacing={1}>
         <Box>
           <Stack direction="row" gap="10px">
             <LocalLibraryIcon fontSize="large" />
-            <Typography variant="h4">Library</Typography>
+            <Typography variant="h4" style={{ color: "red" }}>Library</Typography>
           </Stack>
           <Divider sx={{ mb: "10px", mt: "10px" }} />
         </Box>
@@ -46,13 +47,16 @@ const Sidebar = () => {
           Books
         </Button>
       </Stack>
-      <Button
-        variant="outlined"
-        endIcon={<LogoutIcon />}
-        onClick={handleLogout}
-      >
-        Logout
-      </Button>
+
+      <Box sx={{ position: "sticky", bottom: 0 }}>
+        <Button
+          variant="outlined"
+          endIcon={<LogoutIcon />}
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
+      </Box>
     </Stack>
   );
 };
