@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { db } from "./firebase";
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
-import { useAuth,AuthContextProvider } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import HomePage from './components/Home';
 import Books from "./components/Books";
 import Dashboard from "./components/Dashboard";
+import UserBooks from "./components/userBooks";
+import AddBookForm from "./components/AddBook";
 import { Box, Stack } from "@mui/system";
 import Login from './components/Login';
 import Sidebar from "./components/Sidebar";
@@ -13,6 +15,25 @@ const App=()=> {
 
    const { currentUser } = useAuth();
    const [booksData, setBooksData] = useState([]);
+
+   useEffect(() => {
+    async function firestoreData() {
+      let tempBooks = [];
+      try {
+        const q1 = query(collection(db, "books"), orderBy("bookId"));
+        const querySnapshot2 = await getDocs(q1);
+        querySnapshot2.forEach((doc) => {
+          tempBooks.push(doc.data());
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      setBooksData(tempBooks);
+    }
+    firestoreData();
+  }, []);
+
+
 
   const RequireAuth = ({ children }) => {
     return currentUser ? children : <Navigate to="/login" />;
@@ -48,6 +69,14 @@ const App=()=> {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/library",
+      element: <UserBooks booksData={booksData} setBooksData={setBooksData} />,
+    },
+    {
+      path: "/addbooks",
+      element: <AddBookForm />,
     },
     {
       path:"/home",

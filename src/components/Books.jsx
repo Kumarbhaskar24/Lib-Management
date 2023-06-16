@@ -34,7 +34,7 @@ const Books = ({ booksData, setBooksData }) => {
   const [formType, setFormType] = useState(null);
   const [editIndex, setEditIndex] = useState(null);
 
-   const [bookId, setBookId] = useState(0);
+   //const [bookId, setBookId] = useState(0);
   // const [title, setTitle] = useState("");
   // const [author, setAuthor] = useState("");
   // const [pubDate, setPubDate] = useState("");
@@ -42,6 +42,17 @@ const Books = ({ booksData, setBooksData }) => {
   //const [issued, setIssued] = useState("issued");
 
   //const [bookId, setBookId] = useState(formType === "edit"? booksData[editIndex].bookId:(parseInt(booksData[booksData.length - 1].bookId) + 1).toString());
+  const [bookId, setBookId] = useState(() => {
+    if (formType === "edit" && booksData[editIndex]) {
+      return booksData[editIndex].bookId;
+    } else if (booksData.length > 0) {
+      const lastBookId = parseInt(booksData[booksData.length - 1].bookId);
+      return (lastBookId + 1).toString();
+    } else {
+      return "1";
+    }
+  });
+  
   const [title, setTitle] = useState(formType === "edit" ? booksData[editIndex].title : "" );
   const [author, setAuthor] = useState(formType === "edit" ? booksData[editIndex].author : "");
   const [pubDate, setPubDate] = useState(formType === "edit" ? booksData[editIndex].pubDate : "");
@@ -76,6 +87,7 @@ const Books = ({ booksData, setBooksData }) => {
       });
       console.log("Book added successfully!");
       toast.success("Book added successfully!");
+        window.location.reload();
     } catch (error) {
       console.error("Error adding book:", error);
       toast.error("Error adding book:");
@@ -113,7 +125,7 @@ const Books = ({ booksData, setBooksData }) => {
           });
           console.log("Book updated successfully!");
           toast.success("Book updated successfully!");
-           window.location.reload();
+          window.location.reload();
         }
       });
     } catch (error) {
@@ -152,7 +164,7 @@ const Books = ({ booksData, setBooksData }) => {
       const querySnapshot = await getDocs(
         query(collection(db, "books"), where("bookId", "==", bookId))
       );
-
+        console.log(querySnapshot);
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
           deleteDoc(doc.ref);
@@ -160,7 +172,7 @@ const Books = ({ booksData, setBooksData }) => {
         console.log("Book deleted successfully!");
         toast.success("Book deleted successfully!");
 
-        // window.location.reload();
+        window.location.reload();
       } else {
         console.log("Book not found!");
       }
@@ -211,7 +223,6 @@ const Books = ({ booksData, setBooksData }) => {
       console.error("Error adding book:", error);
     }
   };
-  const options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
   const BookForm = () => {
     return (
       <Modal
@@ -298,7 +309,7 @@ const Books = ({ booksData, setBooksData }) => {
                   name="issued"
                   id="issued"
 
-                   onChange={handleRadioChange}
+                   //onChange={handleRadioChange}
                 >
                   <FormControlLabel
                   name="issued"
