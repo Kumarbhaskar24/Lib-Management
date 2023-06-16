@@ -41,8 +41,8 @@ const HomePage = () => {
                         </Stack>
                         <Divider sx={{ mb: "10px", mt: "10px" }} />
                         <Stack
-                            // component={Link}
-                            // to="/"
+                            component={Link}
+                            to="/login"
                             direction="row"
                             sx={{ textDecoration: "none" }}
                         >
