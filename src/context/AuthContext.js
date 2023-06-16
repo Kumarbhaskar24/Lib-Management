@@ -17,6 +17,7 @@ export function AuthContextProvider({ children }) {
   }
 
   function logout() {
+    localStorage.clear();
     return auth.signOut();
   }
 
