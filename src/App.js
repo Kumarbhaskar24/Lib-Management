@@ -55,10 +55,6 @@ const App=()=> {
 
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <HomePage/>,
-    },
-    {
       path:"/",
       element:(<RequireAuth><Layout/></RequireAuth>),
       children: [{path: "/",element: (
