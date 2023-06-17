@@ -55,6 +55,10 @@ const App=()=> {
 
   const router = createBrowserRouter([
     {
+      path: "/",
+      element: <Navigate to="/home"/>,
+    },
+    {
       path:"/",
       element:(<RequireAuth><Layout/></RequireAuth>),
       children: [{path: "/",element: (
@@ -66,6 +70,10 @@ const App=()=> {
       element: <Books booksData={booksData} setBooksData={setBooksData} />,
     },
   ],
+    },
+    {
+      path: "*",
+      element: <Navigate to="/home"/>,
     },
     {
       path: "/login",
@@ -83,10 +91,7 @@ const App=()=> {
       path:"/home",
       element:<HomePage/>
     },
-    {
-      path: "*",
-      element: <Navigate to="/home"/>,
-    },
+
   ]);
   return (
     <div >

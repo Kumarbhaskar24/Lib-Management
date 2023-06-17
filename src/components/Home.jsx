@@ -40,7 +40,7 @@ const HomePage = () => {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <Card sx={{ p: "20px", width: "250px",mt:15,mb:15}}>
+                    <Card sx={{ p: "20px", width: "250px",mt:15,mb:15,borderRadius:"20px"}}>
                         <Stack
                             direction="column"
                             alignItems="center"
@@ -69,7 +69,7 @@ const HomePage = () => {
                             <EastIcon />
                         </Stack>
                     </Card>
-                    <Card sx={{ p: "20px", width: "250px",mt:15,mb:15 }}>
+                    <Card sx={{ p: "20px", width: "250px",mt:15,mb:15,borderRadius:"20px" }}>
                         <Stack
                             direction="column"
                             alignItems="center"
