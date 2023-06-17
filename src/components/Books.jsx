@@ -29,6 +29,17 @@ const formStyle = {
   p: 4,
 };
 
+
+let imageStyle = {
+  height: "100vh",
+  width: "100vw",
+  backgroundImage:
+    'url("https://c4.wallpaperflare.com/wallpaper/526/8/1002/library-interior-interior-design-books-wallpaper-preview.jpg")',
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+  color: "white",
+};
+
 const Books = ({ booksData, setBooksData }) => {
   const [openForm, setOpenForm] = useState(false);
   const [formType, setFormType] = useState(null);
@@ -339,7 +350,7 @@ const Books = ({ booksData, setBooksData }) => {
   };
 
   return (
-    <Box p={2} ml={2}>
+    <Box p={2} ml={2} sx={{imageStyle}}>
       <ToastContainer />
       <Stack direction="row" spacing={4} mb={3}>
         <Typography variant="h4">Books</Typography>

@@ -10,19 +10,22 @@ import { Card, CardContent, CardMedia, Dialog, DialogContent, Grid } from "@mui/
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import EastIcon from "@mui/icons-material/East";
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper'
+import InputBase from '@mui/material/InputBase';
+import HomeIcon from '@mui/icons-material/Home'
 
-const formStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  height: 600,
-  bgcolor: "white",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+let imageStyle = {
+  height: "100vh",
+  width: "100vw",
+  backgroundImage:
+    'url("https://c4.wallpaperflare.com/wallpaper/526/8/1002/library-interior-interior-design-books-wallpaper-preview.jpg")',
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+  color: "white",
 };
+
 
 const UserBooks = () => {
   const [booksData, setBooksData] = useState([]);
@@ -58,8 +61,8 @@ const UserBooks = () => {
     async function firestoreData() {
       let tempBooks = [];
       try {
-        const q2 = query(collection(db, "books"), orderBy("bookId"));
-        const querySnapshot2 = await getDocs(q2);
+        const q1 = query(collection(db, "books"), orderBy("bookId"));
+        const querySnapshot2 = await getDocs(q1);
         querySnapshot2.forEach((doc) => {
           tempBooks.push(doc.data());
         });
@@ -76,21 +79,7 @@ const UserBooks = () => {
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
-  const filterBooks = (query) => {
-    const filtered = booksData.filter((book) => {
-      const { title, author, pubDate, subject } = book;
 
-      // Check if any of the book properties match the search query
-      return (
-        title.toLowerCase().includes(query.toLowerCase()) ||
-        author.toLowerCase().includes(query.toLowerCase()) ||
-        pubDate.toLowerCase().includes(query.toLowerCase()) ||
-        subject.toLowerCase().includes(query.toLowerCase())
-      );
-    });
-
-    setFilteredBooks(filtered);
-  };
   const [selectedBook, setSelectedBook] = useState(null);
 
 const handleCardClick = (book) => {
@@ -154,23 +143,34 @@ const handleCloseDialog = () => {
   }, [sortCriteria, sortDirection]);
 
   return (
+    <Box style={{imageStyle }}>
     <Box p={2} ml={2}>
       <Stack
         direction="row"
         spacing={4}
         mb={3}
+        ml={3}
+        mr={2}
         alignItems="center"
         justifyContent="space-between"
       >
-        <Stack direction="row" alignItems="center">
-          <Typography variant="h4">Books</Typography>
-          <TextField
-            label="Search"
-            variant="outlined"
-            size="small"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
+        <Stack direction="row" alignItems="center" >
+          <Typography variant="h3">Books</Typography>
+        </Stack>
+
+        <Stack direction="row">
+        <Paper>
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+            <SearchIcon />
+          </IconButton>
+                <InputBase
+            sx={{ ml: 1, flex: 1 }}
+                placeholder="Search Books"
+                value={searchQuery}
+                variant="outlined"
+                onChange={handleSearch}
+                />
+          </Paper>
           {searchQuery && (
             <Typography variant="body2">
               Search Results: {filteredBooks.length}
@@ -199,15 +199,17 @@ const handleCloseDialog = () => {
           </Select>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Typography
-            variant="outlined"
+          <Button
+            variant="contained"
             component={Link}
             to="/home"
             sx={{ textDecoration: "none" }}
           >
+            <HomeIcon fontSize="small" sx={{mr:2}} />
             Back to Home
-            <EastIcon sx={{ verticalAlign: "middle", marginLeft: "5px" }} />
-          </Typography>
+             <EastIcon sx={{ verticalAlign: "middle", marginLeft: "5px" }} /> 
+            {/* <HomeIcon fontSize="small" /> */}
+          </Button>
         </Stack>
       </Stack>
 
@@ -299,8 +301,7 @@ const handleCloseDialog = () => {
           </Button>
         ))}
       </Box>
-
-      {/* <BookForm /> */}
+    </Box>
     </Box>
   );
 };

@@ -12,6 +12,8 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { auth, Provider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { FacebookAuthProvider } from "firebase/auth";
+import HomeIcon from '@mui/icons-material/Home'
+import {Stack } from "@mui/system";
 
 let imageStyle = {
   height: "100vh",
@@ -43,12 +45,35 @@ export default function Login() {
   }
 
 
+
+
+
+
+
   const onFacebookSignIn = () => {
     const Pro = new FacebookAuthProvider();
     signInWithPopup(auth, Pro).then((data) => {
       setValue(data.user.email)
       localStorage.setItem("email", data.user.email)
-    })
+    // signInWithPopup(auth, provider)
+    // .then((result) => {
+    //   const user = result.user;
+    //   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //   const credential = FacebookAuthProvider.credentialFromResult(result);
+  
+     })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = FacebookAuthProvider.credentialFromError(error);
+  
+      // ...
+    });
+
   }
 
   useEffect(() => {
@@ -79,14 +104,24 @@ export default function Login() {
 
   return (
     <div  style={imageStyle}>
+      <Stack direction="row" alignItems="center" justifyContent="right" pr={3} >
+          <Button
+            variant="outlined"
+            component={Link}
+            to="/home"
+            sx={{ textDecoration: "none",backdropFilter: "blur(5px)", mt:"10px"}}
+            
+          >
+            <HomeIcon fontSize="small" sx={{mr:2}} />
+            Back to Home
+             <EastIcon sx={{ verticalAlign: "middle", marginLeft: "5px" }} /> 
+          </Button>
+        </Stack>
     <Container component="main" maxWidth="sm">
-      <Typography variant="h4" textAlign="center" style={{ color: "skyblue" }}>
-        Library Management System
-      </Typography>
       <Container
         maxWidth="xs"
         sx={{
-          marginTop: 4,
+          
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
