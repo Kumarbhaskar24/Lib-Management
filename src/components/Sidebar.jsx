@@ -50,7 +50,7 @@ const Sidebar = () => {
 
       <Box sx={{ position: "sticky", bottom: 0 }}>
         <Button
-          variant="outlined"
+          variant="contained"
           endIcon={<LogoutIcon />}
           onClick={handleLogout}
         >

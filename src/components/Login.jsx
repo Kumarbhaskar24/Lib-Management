@@ -44,12 +44,6 @@ export default function Login() {
     })
   }
 
-
-
-
-
-
-
   const onFacebookSignIn = () => {
     const Pro = new FacebookAuthProvider();
     signInWithPopup(auth, Pro).then((data) => {
@@ -128,7 +122,8 @@ export default function Login() {
           borderStyle:"groove",
           borderColor:"gray",
           backgroundColor: "transparent",
-          backdropFilter: "blur(5px)"
+          backdropFilter: "blur(5px)",
+          borderRadius:"20px"
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -140,20 +135,23 @@ export default function Login() {
         <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
           <TextField
             sx={{
-              backgroundColor: "whitesmoke"
+              backgroundColor: "whitesmoke",
+              borderRadius:"10px"
             }}
             margin="normal"
-            required
+             required
             fullWidth
             id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
+            disableUnderline
           />
           <TextField
             sx={{
-              backgroundColor: "whitesmoke"
+              backgroundColor: "whitesmoke",
+              borderRadius:"10px"
             }}
             margin="normal"
             required
@@ -170,7 +168,8 @@ export default function Login() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: 'green' }}
+            
+            sx={{ mt: 3, mb: 2, backgroundColor: 'green',borderRadius:"20px" }}
           >
             Login
           </Button>
@@ -180,7 +179,7 @@ export default function Login() {
             </Typography>
           )}
         </Box>
-        <Alert severity="info">
+        <Alert severity="info" sx={{borderRadius:"20px"}}>
           <AlertTitle>Use login info</AlertTitle>
           Email Address: <strong>admin@library.com</strong>
           <br />

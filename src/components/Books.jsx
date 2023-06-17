@@ -21,23 +21,13 @@ const formStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  height: 600,
+  width: 350,
+  height: 500,
   bgcolor: "white",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
-};
-
-
-let imageStyle = {
-  height: "100vh",
-  width: "100vw",
-  backgroundImage:
-    'url("https://c4.wallpaperflare.com/wallpaper/526/8/1002/library-interior-interior-design-books-wallpaper-preview.jpg")',
-  backgroundSize: "cover",
-  backgroundRepeat: "no-repeat",
-  color: "white",
+  borderRadius:"20px",
+  p:10,
 };
 
 const Books = ({ booksData, setBooksData }) => {
@@ -63,7 +53,6 @@ const Books = ({ booksData, setBooksData }) => {
       return "1";
     }
   });
-  
   const [title, setTitle] = useState(formType === "edit" ? booksData[editIndex].title : "" );
   const [author, setAuthor] = useState(formType === "edit" ? booksData[editIndex].author : "");
   const [pubDate, setPubDate] = useState(formType === "edit" ? booksData[editIndex].pubDate : "");
@@ -106,26 +95,27 @@ const Books = ({ booksData, setBooksData }) => {
 
     setOpenForm(false);
   };
+  
   async function editFormSubmit(e) {
     e.preventDefault();
     const form = e.target; // Get the form element
-
+  
     const newTitle = form.title.value;
     const newAuthor = form.author.value;
     const newPubDate = form.PublishedDate.value;
     const newSubject = form.subject.value;
     const newIssued = form.issued.value;
-    const imagepath=form.imgpath.value;
+    const imagepath = form.imgpath.value;
     const description = form.description.value;
     try {
       const booksRef = collection(db, "books");
       const querySnapshot = await getDocs(booksRef);
-
-      querySnapshot.forEach((doc) => {
+  
+      querySnapshot.forEach(async (doc) => {
         const bookData = doc.data();
         if (bookData.bookId === booksData[editIndex].bookId) {
           const bookRef = doc.ref;
-          updateDoc(bookRef, {
+          await updateDoc(bookRef, {
             title: newTitle,
             author: newAuthor,
             pubDate: newPubDate,
@@ -143,9 +133,10 @@ const Books = ({ booksData, setBooksData }) => {
       console.error("Error updating book:", error);
       toast.error("Error updating book");
     }
-
     setOpenForm(false);
   }
+  
+    
 
   const editBtnHandler = (index) => {
     setFormType("edit");
@@ -175,18 +166,18 @@ const Books = ({ booksData, setBooksData }) => {
       const querySnapshot = await getDocs(
         query(collection(db, "books"), where("bookId", "==", bookId))
       );
-        console.log(querySnapshot);
+
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
           deleteDoc(doc.ref);
         });
         console.log("Book deleted successfully!");
         toast.success("Book deleted successfully!");
-
-        window.location.reload();
+         
       } else {
         console.log("Book not found!");
       }
+
     } catch (error) {
       console.error("Error deleting book:", error);
       toast.error("Error deleting book");
@@ -234,6 +225,7 @@ const Books = ({ booksData, setBooksData }) => {
       console.error("Error adding book:", error);
     }
   };
+  const options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
   const BookForm = () => {
     return (
       <Modal
@@ -268,7 +260,7 @@ const Books = ({ booksData, setBooksData }) => {
                 required
                 variant="outlined"
                 id="title"
-                label="Title"
+                placeholder="Title"
                 //  onChange={(e) => setTitle(e.target.value)}
                 //  value={title}
               />
@@ -276,7 +268,7 @@ const Books = ({ booksData, setBooksData }) => {
                 required
                 variant="outlined"
                 id="author"
-                label="Author"
+                placeholder="Author"
                 //  onChange={(e) => setAuthor(e.target.value)}
                 // value={author}
               />
@@ -284,7 +276,7 @@ const Books = ({ booksData, setBooksData }) => {
                 required
                 variant="outlined"
                 id="PublishedDate"
-                label="Published Date"
+                placeholder="Published Date"
                 // onChange={(e) => setPubDate(e.target.value)}
                 // value={pubDate}
               />
@@ -292,7 +284,7 @@ const Books = ({ booksData, setBooksData }) => {
                 required
                 variant="outlined"
                 id="subject"
-                label="Subject"
+                placeholder="Subject"
                 // onChange={(e) => setSubject(e.target.value)}
                 // value={subject}
               />
@@ -300,7 +292,7 @@ const Books = ({ booksData, setBooksData }) => {
                 required
                 variant="outlined"
                 id="imgpath"
-                label="Image Link"
+                placeholder="Image Link"
                 // onChange={(e) => setSubject(e.target.value)}
                 // value={subject}
               />
@@ -308,7 +300,7 @@ const Books = ({ booksData, setBooksData }) => {
                 required
                 variant="outlined"
                 id="description"
-                label="Description"
+                placeholder="Description"
                 // onChange={(e) => setSubject(e.target.value)}
                 // value={subject}
               />
@@ -350,7 +342,7 @@ const Books = ({ booksData, setBooksData }) => {
   };
 
   return (
-    <Box p={2} ml={2} sx={{imageStyle}}>
+    <Box p={2} ml={2}>
       <ToastContainer />
       <Stack direction="row" spacing={4} mb={3}>
         <Typography variant="h4">Books</Typography>

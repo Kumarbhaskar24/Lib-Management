@@ -16,18 +16,19 @@ import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase';
 import HomeIcon from '@mui/icons-material/Home'
 
-let imageStyle = {
-  height: "100vh",
-  width: "100vw",
-  backgroundImage:
-    'url("https://c4.wallpaperflare.com/wallpaper/526/8/1002/library-interior-interior-design-books-wallpaper-preview.jpg")',
-  backgroundSize: "cover",
-  backgroundRepeat: "no-repeat",
-  color: "white",
-};
-
-
 const UserBooks = () => {
+
+  const imageStyle = {
+    height: "100%",
+    width: "100%",
+    backgroundImage:
+      'url("https://c4.wallpaperflare.com/wallpaper/568/232/7/texture-simple-dark-simple-background-wallpaper-preview.jpg")',
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    color: "white",
+  };
+
+
   const [booksData, setBooksData] = useState([]);
 //   const [openForm, setOpenForm] = useState(false);
 //   const [formType, setFormType] = useState(null);
@@ -143,7 +144,7 @@ const handleCloseDialog = () => {
   }, [sortCriteria, sortDirection]);
 
   return (
-    <Box style={{imageStyle }}>
+    <Box sx={imageStyle }>
     <Box p={2} ml={2}>
       <Stack
         direction="row"
@@ -155,7 +156,7 @@ const handleCloseDialog = () => {
         justifyContent="space-between"
       >
         <Stack direction="row" alignItems="center" >
-          <Typography variant="h3">Books</Typography>
+          <Typography variant="h3">BOOKS</Typography>
         </Stack>
 
         <Stack direction="row">
@@ -177,12 +178,12 @@ const handleCloseDialog = () => {
             </Typography>
           )}
         </Stack>
-        <Stack direction="row" alignItems="center">
+        <Stack direction="row" alignItems="center" >
           <Select
             value={sortCriteria}
             onChange={handleSortCriteriaChange}
             variant="outlined"
-            sx={{ marginRight: "8px" }}
+            sx={{ marginRight: "8px", backgroundColor:"whitesmoke" }}
           >
             <MenuItem value="title">Title</MenuItem>
             <MenuItem value="author">Author</MenuItem>
@@ -193,6 +194,7 @@ const handleCloseDialog = () => {
             value={sortDirection}
             onChange={handleSortDirectionChange}
             variant="outlined"
+            sx={{backgroundColor:"whitesmoke"}}
           >
             <MenuItem value="asc">Ascending</MenuItem>
             <MenuItem value="desc">Descending</MenuItem>
@@ -214,13 +216,15 @@ const handleCloseDialog = () => {
       </Stack>
 
       {filteredBooks.length > 0 && (
-  <Grid container spacing={2} justifyContent="center">
+  <Grid container spacing={2} ml={7} justifyContent="center">
     {currentResults.map((book, index) => (
       <Grid item xs={12} sm={6} md={4} key={book.bookId}>
         <Card
           sx={{
             maxWidth: 345,
             transition: 'box-shadow 0.3s',
+            backgroundColor:"teal",
+            borderRadius:"20px",
             '&:hover': {
               boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
               transform: 'scale(1.05)',

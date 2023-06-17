@@ -62,6 +62,7 @@ const HomePage = () => {
                             component={Link}
                             to="/login"
                             direction="row"
+                            justifyContent="center"
                             sx={{ textDecoration: "none" }}
                         >
                             <Typography>Login to Admin Dashboard</Typography>
@@ -91,6 +92,7 @@ const HomePage = () => {
                             to="/Library"
                             direction="row"
                             sx={{ textDecoration: "none" }}
+                            justifyContent="center"
                         >
                             <Typography>Go to Library</Typography>
                             <EastIcon />

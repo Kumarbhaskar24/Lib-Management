@@ -27,7 +27,7 @@ const Dashboard = ({ booksData}) => {
     </div>
 
       <Stack direction={"row"} spacing={2} justifyContent="center">
-        <Card sx={{ p: "20px", width: "200px",mr:"180px"}}>
+        <Card sx={{ p: "20px", width: "200px",mr:"180px",borderRadius:"20px"}}>
           <Stack
             direction="row"
             alignItems="center"
