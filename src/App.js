@@ -56,7 +56,7 @@ const App=()=> {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Navigate to="/home"/>,
+      element: <HomePage/>,
     },
     {
       path:"/",
